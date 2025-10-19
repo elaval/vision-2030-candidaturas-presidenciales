@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visión Chile 2030 - Candidatos Presidenciales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .candidato-section {
+            background: white;
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            page-break-after: always;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .candidato-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #0066cc;
+        }
+
+        .candidato-foto {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+            border: 3px solid #0066cc;
+        }
+
+        .candidato-nombre {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .visiones-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .vision-column {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .vision-column.gpt5 {
+            border-left-color: #10a37f;
+        }
+
+        .vision-column.claude {
+            border-left-color: #cc785c;
+        }
+
+        .vision-column.perplexity {
+            border-left-color: #1fb0ea;
+        }
+
+        .vision-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .vision-title::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .gpt5 .vision-title::before {
+            background-color: #10a37f;
+        }
+
+        .claude .vision-title::before {
+            background-color: #cc785c;
+        }
+
+        .perplexity .vision-title::before {
+            background-color: #1fb0ea;
+        }
+
+        .vision-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #444;
+            text-align: justify;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .candidato-section {
+                page-break-after: always;
+                box-shadow: none;
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .visiones-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Datos de las visiones
+        const gpt5Data = [
+  {
+    "candidato": "Evelyn Matthei",
+    "vision_2030": "Al 2030, Chile habrá consolidado un desarrollo económico sostenible con foco en orden, progreso y esperanza. El país recuperará la seguridad mediante inversión de US$2.500 millones en tecnología y dotación policial, creando condiciones para que las familias vivan tranquilas. El modelo económico priorizará la creación de 800 mil empleos formales, el desbloqueo de inversiones a través de ventanilla única digital y simplificación de permisos, y el fortalecimiento de sectores estratégicos como minería, energía, turismo y acuicultura. En salud se implementará el plan 30-30-30 para construir 30 hospitales al 2030, reducir listas de espera y mejorar acceso oportuno mediante transformación digital. La vivienda se facilitará con programa Pie Cero para jóvenes y eliminación de trabas regulatorias. El Estado se convertirá en facilitador de la inversión privada más que en obstáculo, promoviendo crecimiento del 4% anual que permita movilidad social y prosperidad compartida basada en esfuerzo y mérito."
+  },
+  {
+    "candidato": "Eduardo Artés",
+    "vision_2030": "Al 2030, Chile habrá iniciado una transformación hacia un modelo de Estado planificador y productor con soberanía económica. El país avanzará en la renacionalización de recursos estratégicos, especialmente cobre y litio, mediante una nueva Asamblea Constituyente genuina que refunde instituciones. El modelo económico se basará en planificación quinquenal estatal con control público de sectores clave: minería, energía, alimentación, construcción y transporte. Se garantizará seguridad alimentaria mediante reorientación de producción agrícola hacia consumo interno, con eliminación de impuestos a alimentos básicos. Las empresas monopólicas en construcción, inmobiliarias y materiales pasarán a conformar industria estatal. El Estado fijará topes de ganancias y escalas salariales nacionales, permitiendo participación privada solo bajo condiciones de planificación estatal. Se promoverá industrialización con encadenamientos productivos, independencia energética mediante renovables y estudio de energía nuclear. La soberanía nacional se reforzará con Fuerzas Armadas patrióticas refundadas y políticas antiimperialistas."
+  },
+  {
+    "candidato": "Franco Parisi",
+    "vision_2030": "Al 2030, Chile habrá implementado un Estado consciente e inteligente que opere con máxima eficiencia fiscal y transparencia. El modelo se sustenta en reducción drástica del gasto público mediante despido de 50.000 empleados contratados sin criterios de eficiencia, evaluación permanente de programas gubernamentales y eliminación de sueldos estatales superiores a $5 millones mensuales. Se promoverá emprendimiento mediante rebaja de impuesto corporativo a grandes empresas y apoyo específico a MiPymes con asociatividad empresarial. El sistema de salud y pensiones será solidario con mayor tasa de reemplazo. En seguridad se aplicará modelo estilo Bukele con barcos-cárcel y fiscales electos popularmente. La innovación se impulsará con reconocimiento de e-sports, desarrollo de economía digital y plataformas abiertas de datos agrícolas. En sostenibilidad se alcanzarán escuelas con certificación ambiental obligatoria al 2030 y asambleas ciudadanas climáticas con presupuesto vinculante del 15% municipal. Se combatirá corrupción con Ley Topo de delación compensada."
+  },
+  {
+    "candidato": "Harold Mayne-Nicholls",
+    "vision_2030": "Al 2030, Chile habrá recuperado la confianza en sus instituciones mediante liderazgo que escucha, une y sirve. El país superará la división izquierda-derecha trabajando como selección nacional con propósito común. La seguridad se garantizará con institucionalidad robusta: Comité Nacional semanal, Ministerio de Seguridad consolidado, control fronterizo reforzado y apoyo de FFAA en zonas críticas hasta restablecer normalidad. El sistema de salud se transformará con reducción de listas de espera, regulación de precios de medicamentos, Centros Comunitarios de Salud Mental y ficha médica electrónica en código QR de cédula. La educación integrará inteligencia artificial con uso ético y se creará Instituto Nacional para Mejora Educativa que audite estándares pedagógicos. La economía crecerá mediante ventanilla única digital para inversión con trazabilidad y plazos perentorios, Centros de Competitividad Territorial en universidades regionales y fortalecimiento de InvestChile. Se combatirá obesidad infantil con política pública urgente, se recuperarán esquinas transformándolas en espacios culturales y deportivos."
+  },
+  {
+    "candidato": "Jeannette Jara",
+    "vision_2030": "Al 2030, Chile habrá construido un modelo de desarrollo guiado por la demanda interna donde cuando a trabajadores les va bien, al país también le va bien. El crecimiento económico se transformará en desarrollo social que llegue a todas las familias mediante fortalecimiento del empleo, negociación colectiva, aumento sostenido del salario mínimo hacia $750.000 y participación democrática en decisiones económicas. La inversión pública y privada se acelerará con ventanilla única de permisos, eliminación del Comité de Ministros y oficina presidencial para destrabar proyectos. En energía se alcanzará 6 GW de almacenamiento para 2028 y 20% de capacidad instalada con almacenamiento al 2030, impulsando hidrógeno verde e incrementando producción de litio en 30%. La seguridad mejorará con fortalecimiento de policías, más cárceles, inteligencia policial y persecución financiera del delito. La salud será oportuna, la educación moderna e integradora, y los barrios dignos. El Estado articulará inversiones manteniendo provisión mixta pero fortaleciendo lo público, sin nueva reforma tributaria."
+  },
+  {
+    "candidato": "Johannes Kaiser",
+    "vision_2030": "Al 2030, Chile será una de las economías más libres y dinámicas del mundo mediante Plan Económico de Sentido Común que prioriza libertad, capital humano e instituciones que sirven en vez de dominar. El Estado austero, transparente y facilitador operará con reglas simples, impuestos bajos (corporativo reducido de 27% a 20% para grandes empresas, 25% a 12,5% para MiPymes) y gasto eficiente recortado en 4,5-5% del PIB. Se eliminará burocracia asfixiante mediante Ley Rastrillo que retrotraerá regulaciones dañinas y regla 5/1 que eliminará cinco regulaciones por cada nueva. Las MiPymes serán protagonistas del desarrollo con objetivo de triplicar su aporte al PIB. La educación se liberará entregando establecimientos a cooperativas docentes con currículum flexible. La salud operará con autogestión de trabajadores y pagos por resultados. Se recuperará la cultura enfocada en Verdad, Bien, Belleza y Libertad frente a guerra cultural. La minería se despolitizará recuperando competitividad global, el litio será concesible y licitable, y se creará Fondo Soberano Minero estilo noruego."
+  },
+  {
+    "candidato": "José Antonio Kast",
+    "vision_2030": "Al 2030, Chile habrá superado sus tres emergencias mediante gobierno de autoridad y cambio. La emergencia de seguridad se resolverá con Plan Implacable que incluye 10 cárceles de máxima seguridad, eliminación de puerta giratoria, penas más duras, blindaje fronterizo con Policía Fronteriza equipada con tecnología avanzada y respaldo total al uso legítimo de fuerza policial. La emergencia económica se enfrentará con ajuste fiscal de US$6.000 millones en 18 meses, reducción de impuestos corporativos, eliminación de burocracia y obstruccionismo, e impulso a competitividad en sectores estratégicos como agroalimentación, turismo, minería y construcción mediante alianzas público-privadas. La emergencia social se abordará con Plan Generación Dorada para adultos mayores, Plan A Mover Chile contra sedentarismo, Plan Barrido Total contra comercio ilícito, fortalecimiento de familias con bono por hijo y alivios tributarios, pensiones más altas manteniendo responsabilidad fiscal, y educación que forme sin adoctrinar basada en mérito y libertad de elección."
+  },
+  {
+    "candidato": "Marco Enríquez-Ominami",
+    "vision_2030": "Al 2030, Chile habrá recuperado su soberanía económica mediante Arquitectura Soberana 2025-2030 que reconstruye confianza y promueve alianzas público-privadas con Estado estratega, moderno y flexible. La Agenda Pro-Crecimiento e Inversión movilizará US$21.000 millones en proyectos estratégicos de infraestructura logística, energía limpia y vivienda, generando 1,2 millones de empleos directos e indirectos. Se implementará ventanilla única digital (ONIP) para proyectos con plazos de aprobación inferiores a 18 meses y Política Industrial Inteligente 2030 impulsando litio con valor agregado, energía verde y economía azul. La reforma tributaria verde y progresiva elevará recaudación en más de 3,5 puntos del PIB, con reducción de impuestos a empresas grandes y MiPymes pero aumento de 0,5% a siete mil familias con más de US$10 millones. Se modernizará Codelco, fortalecerá ENAP como actor de transición energética y BancoEstado como banco de desarrollo con créditos garantizados para economía verde. En educación se alcanzará 50% de horas lectivas y 50% no lectivas al 2030, se eliminará Simce y se equipararán remuneraciones docentes."
+  }
+];
+
+        const claudeData = [
+  {
+    "candidato": "Evelyn Matthei Fornet",
+    "vision_2030": "Al 2030, Chile será un país que ha recuperado el orden, la seguridad y el crecimiento económico sostenido al 4% anual. Un Chile donde las familias vivan sin miedo, con barrios seguros y espacios públicos recuperados del crimen organizado. La economía habrá generado un millón de empleos formales y de calidad, especialmente para mujeres y jóvenes. El Estado será eficiente, transparente y sin corrupción, reducido de 25 a 19 ministerios. Los servicios públicos de salud, educación y vivienda funcionarán con estándares de calidad, eliminando listas de espera y entregando 400 mil soluciones habitacionales. Chile habrá avanzado hacia la carbono-neutralidad para 2050, con infraestructura moderna, inversión en ciencia y tecnología, y una clase media fortalecida donde el esfuerzo valga la pena. Un país que proyecta estabilidad, progreso compartido y esperanza para las nuevas generaciones."
+  },
+  {
+    "candidato": "Eduardo Antonio Artés Brichetti",
+    "vision_2030": "Al 2030, Chile habrá iniciado su refundación bajo un modelo socialista con un gobierno patriótico y popular. El Estado controla los recursos naturales estratégicos (cobre, litio, agua, energía) mediante nacionalización, y lidera un proceso de industrialización nacional basado en planificación quinquenal. La economía mixta tiene al sector estatal como dominante, protegiendo PYMES y cooperativas. Una Asamblea Constituyente genuina habrá creado una nueva constitución que reconoce la plurinacionalidad y establece la soberanía popular. Los trabajadores gozan de derechos laborales plenos, jornada de 35 horas, sistema previsional solidario sin AFP, salud y educación públicas universales, y vivienda digna garantizada. Chile mantiene política exterior antiimperialista, con lazos fortalecidos con países socialistas, Cuba, Corea del Norte, China, Vietnam y BRICS. La seguridad energética se logra con renovables y desarrollo nuclear. Un país independiente del imperialismo, industrializado y en construcción del socialismo."
+  },
+  {
+    "candidato": "Franco Aldo Parisi Fernández",
+    "vision_2030": "Al 2030, Chile será un país con un Estado inteligente y estratégico que funciona como socio del sector privado, habiendo construido 250.000 créditos hipotecarios y generado más de un millón de empleos. El país habrá reducido drásticamente el gasto público con sueldos máximos de $5.000.000 para funcionarios públicos, eliminado el INDH y los sueldos vitalicios de expresidentes. La economía mixta combina más Estado y más mercado, con BancoEstado como banco de desarrollo, modernización de CODELCO y ENAP en transición energética. Chile lidera en deportes electrónicos reconocidos legalmente, tiene IVA diferenciado (0% alimentos, 15% PYMES, 19% grandes empresas) y sistema de delación compensada contra corrupción. Las fronteras están controladas con deportación de inmigrantes ilegales. El país ha diversificado su economía con alianzas público-privadas, ventanilla única digital para proyectos, y se posiciona como hub de innovación regional con menor burocracia y mayor eficiencia estatal."
+  },
+  {
+    "candidato": "Harold Alfred Mayne-Nicholls Sécul",
+    "vision_2030": "Al 2030, Chile habrá recuperado su alma y sentido de comunidad bajo un liderazgo independiente que devolvió la convivencia pacífica. El país genera al menos 500.000 nuevos empleos formales en cuatro años, con salarios dignos progresivos y obras públicas intensivas. La economía crece sosteniblemente con Centros de Competitividad Territorial en cada región, ventanilla única digital para proyectos (aprobación bajo 18 meses) y BancoEstado apoyando PYMES con créditos de tasa reducida. Los campamentos han sido erradicados mediante construcción masiva de viviendas sociales con planificación territorial rigurosa y desarrollo de barrios integrales. El sistema de salud funciona con Fonasa implementando cobertura complementaria bajo supervisión estricta. Chile lidera en transición energética con descarbonización acelerada (cierre carbón antes de 2040, idealmente 2035) e hidrógeno verde como sector exportador. El país es más equilibrado territorialmente, con desarrollo descentralizado y Estado que gobierna con y para la gente, no para grupos específicos."
+  },
+  {
+    "candidato": "Jeannette Alejandra Jara Román",
+    "vision_2030": "Al 2030, Chile será un país que crece económicamente de manera justa, inclusiva y sostenible, habiendo alcanzado al menos 20% de capacidad instalada de energía con sistemas de almacenamiento y liderazgo en energías renovables. El Estado estratega coordina sectores prioritarios (minería, energía, litio, telecomunicaciones, infraestructura, pesca, agroindustria, forestal) mediante políticas industriales activas. Los barrios son seguros con combate efectivo al crimen organizado y narcotráfico, fortaleciendo policías e inteligencia financiera. Los derechos sociales están garantizados: salud oportuna con listas de espera reducidas, educación de calidad, vivienda digna accesible, y sistema de pensiones mejorado. Chile ha construido cohesión social superando la desigualdad, con énfasis en corresponsabilidad entre Estado, sector privado y sociedad civil. El crecimiento económico se logra mediante inversión en infraestructura, ventanilla única ágil para proyectos, y apoyo decidido a PYMES. Un Chile que cumple sus compromisos, con Estado eficiente, transparente y al servicio de las familias trabajadoras."
+  },
+  {
+    "candidato": "Johannes Maximilian Kaiser Barents von Hohenhagen",
+    "vision_2030": "Al 2030, Chile será un Estado austero, transparente y facilitador con economía de mercado libre, impuestos bajos y burocracia mínima. El Estado se habrá reducido drásticamente de 25 a 9 ministerios, con 200.000 funcionarios públicos menos y superávit estructural de +1% del PIB. La economía crecerá al 4,6% anual (duplicando el potencial actual de 2,3%) tras eliminar regulaciones asfixiantes y reducir gasto público en 4,5-5% del PIB. Las PYMES son protagonistas del desarrollo con su aporte triplicado al PIB, apoyadas por capital ángel con incentivos tributarios y educación transformada en cooperativas gestionadas por profesores. Chile es el mejor lugar del mundo para ser madre, con políticas pro-natalidad, reconocimiento social de la maternidad y corresponsabilidad familiar. El país tiene seguridad nacional con combate implacable al crimen (pena de muerte para narcotraficantes), fronteras blindadas, y Estado de derecho restaurado. La política exterior es antiglobalista, con posible salida de la ONU. Un Chile reaccionario que rechaza el progresismo, defiende valores tradicionales y la familia, bajo principios libertarios cristianos y minarquistas."
+  },
+  {
+    "candidato": "José Antonio Kast Rist",
+    "vision_2030": "Al 2030, Chile habrá completado un cambio radical que restauró el orden, la seguridad y la libertad bajo un gobierno de emergencia que aplicó medidas drásticas. El país crece al 4% anual tras shock de crecimiento con inversión recuperada, impuesto corporativo reducido de 27% a 20%, y ajuste fiscal de US$6.000 millones en 18 meses eliminando gasto superfluo y programas mal evaluados. Las fronteras están cerradas y blindadas, el crimen organizado está desmantelado con líderes aislados en cárceles de máxima seguridad sin beneficios, y el territorio recuperado mediante Plan Implacable con justicia implacable y mano dura. Chile es un país con valores tradicionales restaurados donde la familia (matrimonio hombre-mujer) es el núcleo social, se defiende la vida desde la concepción, y se combate el progresismo. Las FF.AA. tienen respaldo total del Estado, la inmigración ilegal fue frenada con expulsiones masivas, y La Araucanía está pacificada tras estrategia antiterrorista. El Estado subsidiario facilita la libre iniciativa privada con mínima regulación. Un Chile conservador, ordenado y próspero que rechaza el comunismo y defiende la libertad con orden."
+  },
+  {
+    "candidato": "Marco Antonio Enríquez-Ominami Gumucio",
+    "vision_2030": "Al 2030, Chile habrá revertido su crisis de inversión bajo un gobierno 'mediador' que combinó más Estado y más mercado en economía mixta moderna. El país generó 1,2 millones de empleos directos e indirectos mediante inversión estratégica de US$21.000 millones en trenes, puertos, vivienda y energías limpias, movilizando US$73.000 millones en inversión privada vía alianzas público-privadas. La Oficina Nacional de Inversiones Productivas (ONIP) permite aprobar proyectos en menos de 18 meses con ventanilla única digital. Chile lidera en litio con valor agregado, hidrógeno verde, acero sostenible, agroindustria y economía azul bajo Política Industrial Inteligente 2030. CODELCO reinvierte 30% de utilidades, ENAP lidera transición energética, y BancoEstado funciona como banco de desarrollo apoyando PYMES y cooperativas. La reforma tributaria verde elevó recaudación en 3,5 puntos del PIB con IVA diferenciado (0% alimentos/libros, 15% PYMES, 19% grandes), aliviando clase media. Chile es progresista independiente, sin fanatismos ideológicos, que construyó nueva mayoría ciudadana con sentido común, reformas justas y Estado patriota que cuida a su gente."
+  }
+];
+
+        const perplexityData = [
+  {
+    "candidato": "Evelyn Matthei Fornet",
+    "vision_2030": "Al 2030, Chile será un país que ha recuperado el orden, la seguridad y el crecimiento económico sostenido al 4% anual. Un Chile donde las familias vivan sin miedo, con barrios seguros y espacios públicos recuperados del crimen organizado. La economía habrá generado un millón de empleos formales y de calidad, especialmente para mujeres y jóvenes. El Estado será eficiente, transparente y sin corrupción, reducido de 25 a 19 ministerios. Los servicios públicos de salud, educación y vivienda funcionarán con estándares de calidad, eliminando listas de espera y entregando 400 mil soluciones habitacionales. Chile habrá avanzado hacia la carbono-neutralidad para 2050, con infraestructura moderna, inversión en ciencia y tecnología, y una clase media fortalecida donde el esfuerzo valga la pena. Un país que proyecta estabilidad, progreso compartido y esperanza para las nuevas generaciones."
+  },
+  {
+    "candidato": "Eduardo Antonio Artés Brichetti",
+    "vision_2030": "Al 2030, Chile habrá iniciado su refundación bajo un modelo socialista con un gobierno patriótico y popular. El Estado controla los recursos naturales estratégicos (cobre, litio, agua, energía) mediante nacionalización, y lidera un proceso de industrialización nacional basado en planificación quinquenal. La economía mixta tiene al sector estatal como dominante, protegiendo PYMES y cooperativas. Una Asamblea Constituyente genuina habrá creado una nueva constitución que reconoce la plurinacionalidad y establece la soberanía popular. Los trabajadores gozan de derechos laborales plenos, jornada de 35 horas, sistema previsional solidario sin AFP, salud y educación públicas universales, y vivienda digna garantizada. Chile mantiene política exterior antiimperialista, con lazos fortalecidos con países socialistas, Cuba, Corea del Norte, China, Vietnam y BRICS. La seguridad energética se logra con renovables y desarrollo nuclear. Un país independiente del imperialismo, industrializado y en construcción del socialismo."
+  },
+  {
+    "candidato": "Franco Aldo Parisi Fernández",
+    "vision_2030": "Al 2030, Chile será un país con un Estado inteligente y estratégico que funciona como socio del sector privado, habiendo construido 250.000 créditos hipotecarios y generado más de un millón de empleos. El país habrá reducido drásticamente el gasto público con sueldos máximos de $5.000.000 para funcionarios públicos, eliminado el INDH y los sueldos vitalicios de expresidentes. La economía mixta combina más Estado y más mercado, con BancoEstado como banco de desarrollo, modernización de CODELCO y ENAP en transición energética. Chile lidera en deportes electrónicos reconocidos legalmente, tiene IVA diferenciado (0% alimentos, 15% PYMES, 19% grandes empresas) y sistema de delación compensada contra corrupción. Las fronteras están controladas con deportación de inmigrantes ilegales. El país ha diversificado su economía con alianzas público-privadas, ventanilla única digital para proyectos, y se posiciona como hub de innovación regional con menor burocracia y mayor eficiencia estatal."
+  },
+  {
+    "candidato": "Harold Alfred Mayne-Nicholls Sécul",
+    "vision_2030": "Al 2030, Chile habrá recuperado su alma y sentido de comunidad bajo un liderazgo independiente que devolvió la convivencia pacífica. El país genera al menos 500.000 nuevos empleos formales en cuatro años, con salarios dignos progresivos y obras públicas intensivas. La economía crece sosteniblemente con Centros de Competitividad Territorial en cada región, ventanilla única digital para proyectos (aprobación bajo 18 meses) y BancoEstado apoyando PYMES con créditos de tasa reducida. Los campamentos han sido erradicados mediante construcción masiva de viviendas sociales con planificación territorial rigurosa y desarrollo de barrios integrales. El sistema de salud funciona con Fonasa implementando cobertura complementaria bajo supervisión estricta. Chile lidera en transición energética con descarbonización acelerada (cierre carbón antes de 2040, idealmente 2035) e hidrógeno verde como sector exportador. El país es más equilibrado territorialmente, con desarrollo descentralizado y Estado que gobierna con y para la gente, no para grupos específicos."
+  },
+  {
+    "candidato": "Jeannette Alejandra Jara Román",
+    "vision_2030": "Al 2030, Chile será un país que crece económicamente de manera justa, inclusiva y sostenible, habiendo alcanzado al menos 20% de capacidad instalada de energía con sistemas de almacenamiento y liderazgo en energías renovables. El Estado estratega coordina sectores prioritarios (minería, energía, litio, telecomunicaciones, infraestructura, pesca, agroindustria, forestal) mediante políticas industriales activas. Los barrios son seguros con combate efectivo al crimen organizado y narcotráfico, fortaleciendo policías e inteligencia financiera. Los derechos sociales están garantizados: salud oportuna con listas de espera reducidas, educación de calidad, vivienda digna accesible, y sistema de pensiones mejorado. Chile ha construido cohesión social superando la desigualdad, con énfasis en corresponsabilidad entre Estado, sector privado y sociedad civil. El crecimiento económico se logra mediante inversión en infraestructura, ventanilla única ágil para proyectos, y apoyo decidido a PYMES. Un Chile que cumple sus compromisos, con Estado eficiente, transparente y al servicio de las familias trabajadoras."
+  },
+  {
+    "candidato": "Johannes Maximilian Kaiser Barents von Hohenhagen",
+    "vision_2030": "Al 2030, Chile será un Estado austero, transparente y facilitador con economía de mercado libre, impuestos bajos y burocracia mínima. El Estado se habrá reducido drásticamente de 25 a 9 ministerios, con 200.000 funcionarios públicos menos y superávit estructural de +1% del PIB. La economía crecerá al 4,6% anual (duplicando el potencial actual de 2,3%) tras eliminar regulaciones asfixiantes y reducir gasto público en 4,5-5% del PIB. Las PYMES son protagonistas del desarrollo con su aporte triplicado al PIB, apoyadas por capital ángel con incentivos tributarios y educación transformada en cooperativas gestionadas por profesores. Chile es el mejor lugar del mundo para ser madre, con políticas pro-natalidad, reconocimiento social de la maternidad y corresponsabilidad familiar. El país tiene seguridad nacional con combate implacable al crimen (pena de muerte para narcotraficantes), fronteras blindadas, y Estado de derecho restaurado. La política exterior es antiglobalista, con posible salida de la ONU. Un Chile reaccionario que rechaza el progresismo, defiende valores tradicionales y la familia, bajo principios libertarios cristianos y minarquistas."
+  },
+  {
+    "candidato": "José Antonio Kast Rist",
+    "vision_2030": "Al 2030, Chile habrá completado un cambio radical que restauró el orden, la seguridad y la libertad bajo un gobierno de emergencia que aplicó medidas drásticas. El país crece al 4% anual tras shock de crecimiento con inversión recuperada, impuesto corporativo reducido de 27% a 20%, y ajuste fiscal de US$6.000 millones en 18 meses eliminando gasto superfluo y programas mal evaluados. Las fronteras están cerradas y blindadas, el crimen organizado está desmantelado con líderes aislados en cárceles de máxima seguridad sin beneficios, y el territorio recuperado mediante Plan Implacable con justicia implacable y mano dura. Chile es un país con valores tradicionales restaurados donde la familia (matrimonio hombre-mujer) es el núcleo social, se defiende la vida desde la concepción, y se combate el progresismo. Las FF.AA. tienen respaldo total del Estado, la inmigración ilegal fue frenada con expulsiones masivas, y La Araucanía está pacificada tras estrategia antiterrorista. El Estado subsidiario facilita la libre iniciativa privada con mínima regulación. Un Chile conservador, ordenado y próspero que rechaza el comunismo y defiende la libertad con orden."
+  },
+  {
+    "candidato": "Marco Antonio Enríquez-Ominami Gumucio",
+    "vision_2030": "Al 2030, Chile habrá revertido su crisis de inversión bajo un gobierno 'mediador' que combinó más Estado y más mercado en economía mixta moderna. El país generó 1,2 millones de empleos directos e indirectos mediante inversión estratégica de US$21.000 millones en trenes, puertos, vivienda y energías limpias, movilizando US$73.000 millones en inversión privada vía alianzas público-privadas. La Oficina Nacional de Inversiones Productivas (ONIP) permite aprobar proyectos en menos de 18 meses con ventanilla única digital. Chile lidera en litio con valor agregado, hidrógeno verde, acero sostenible, agroindustria y economía azul bajo Política Industrial Inteligente 2030. CODELCO reinvierte 30% de utilidades, ENAP lidera transición energética, y BancoEstado funciona como banco de desarrollo apoyando PYMES y cooperativas. La reforma tributaria verde elevó recaudación en 3,5 puntos del PIB con IVA diferenciado (0% alimentos/libros, 15% PYMES, 19% grandes), aliviando clase media. Chile es progresista independiente, sin fanatismos ideológicos, que construyó nueva mayoría ciudadana con sentido común, reformas justas y Estado patriota que cuida a su gente."
+  }
+];
+
+        const fotosData = [
+    {
+      "nombre": "Evelyn Matthei",
+      "foto_url": "fotos/matthei.jpg"},
+    {
+      "nombre": "José Antonio Kast",
+      "foto_url": "fotos/kast.jpg"    },
+    {
+      "nombre": "Jeannette Jara",
+      "foto_url": "fotos/jara.jpg"    },
+    {
+      "nombre": "Johannes Kaiser",
+      "foto_url": "fotos/kaiser.jpg"    },
+    {
+      "nombre": "Harold Mayne-Nicholls",
+      "foto_url": "fotos/mayne-nichols.jpg"   },
+    {
+      "nombre": "Marco Enríquez-Ominami",
+      "foto_url": "fotos/meo.jpg"    },
+    {
+      "nombre": "Eduardo Artés",
+      "foto_url": "fotos/artes.jpg"    },
+    {
+      "nombre": "Franco Parisi",
+      "foto_url": "fotos/parisi.jpg"    }
+  ];
+
+        // Función para normalizar nombres
+        function normalizarNombre(nombre) {
+            // Mapeo de nombres cortos a nombres completos en los datos
+            const mapeoNombres = {
+                'Evelyn Matthei': 'Evelyn Matthei Fornet',
+                'Eduardo Artés': 'Eduardo Antonio Artés Brichetti',
+                'Franco Parisi': 'Franco Aldo Parisi Fernández',
+                'Harold Mayne-Nicholls': 'Harold Alfred Mayne-Nicholls Sécul',
+                'Jeannette Jara': 'Jeannette Alejandra Jara Román',
+                'Johannes Kaiser': 'Johannes Maximilian Kaiser Barents von Hohenhagen',
+                'José Antonio Kast': 'José Antonio Kast Rist',
+                'Marco Enríquez-Ominami': 'Marco Antonio Enríquez-Ominami Gumucio'
+            };
+
+            return mapeoNombres[nombre] || nombre;
+        }
+
+        // Función para obtener el nombre corto
+        function obtenerNombreCorto(nombreCompleto) {
+            const mapeoInverso = {
+                'Evelyn Matthei Fornet': 'Evelyn Matthei',
+                'Eduardo Antonio Artés Brichetti': 'Eduardo Artés',
+                'Franco Aldo Parisi Fernández': 'Franco Parisi',
+                'Harold Alfred Mayne-Nicholls Sécul': 'Harold Mayne-Nicholls',
+                'Jeannette Alejandra Jara Román': 'Jeannette Jara',
+                'Johannes Maximilian Kaiser Barents von Hohenhagen': 'Johannes Kaiser',
+                'José Antonio Kast Rist': 'José Antonio Kast',
+                'Marco Antonio Enríquez-Ominami Gumucio': 'Marco Enríquez-Ominami'
+            };
+
+            return mapeoInverso[nombreCompleto] || nombreCompleto;
+        }
+
+        // Función para generar HTML de cada candidato
+        function generarCandidatoHTML(candidato, gpt5Vision, claudeVision, perplexityVision, foto) {
+            return `
+                <div class="candidato-section">
+                    <div class="candidato-header">
+                        <img src="${foto}" alt="${candidato}" class="candidato-foto" onerror="this.style.display='none'">
+                        <h1 class="candidato-nombre">${candidato}</h1>
+                    </div>
+                    <div class="visiones-container">
+                        <div class="vision-column gpt5">
+                            <div class="vision-title">GPT-5 with Research (OpenAI)</div>
+                            <div class="vision-text">${gpt5Vision}</div>
+                        </div>
+                        <div class="vision-column claude">
+                            <div class="vision-title">Claude Sonnet 4.5 (Anthropic)</div>
+                            <div class="vision-text">${claudeVision}</div>
+                        </div>
+                        <div class="vision-column perplexity">
+                            <div class="vision-title">Perplexity</div>
+                            <div class="vision-text">${perplexityVision}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Generar contenido
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.body;
+
+            // Iterar por cada candidato en GPT5 data (usamos este como referencia)
+            gpt5Data.forEach(candidatoGPT5 => {
+                const nombreNormalizado = normalizarNombre(candidatoGPT5.candidato);
+
+                // Buscar datos correspondientes en Claude y Perplexity
+                const candidatoClaude = claudeData.find(c => normalizarNombre(c.candidato) === nombreNormalizado);
+                const candidatoPerplexity = perplexityData.find(c => normalizarNombre(c.candidato) === nombreNormalizado);
+
+                // Buscar foto
+                const nombreCorto = obtenerNombreCorto(nombreNormalizado);
+                const fotoData = fotosData.find(f => f.nombre === nombreCorto);
+
+                if (candidatoClaude && candidatoPerplexity) {
+                    const html = generarCandidatoHTML(
+                        nombreCorto,
+                        candidatoGPT5.vision_2030,
+                        candidatoClaude.vision_2030,
+                        candidatoPerplexity.vision_2030,
+                        fotoData ? fotoData.foto_url : ''
+                    );
+
+                    container.innerHTML += html;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

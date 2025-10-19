@@ -1,0 +1,61 @@
+Rol:
+Actúa como analista político chileno y comunicador experto. Redacta en español claro, preciso y neutral.
+Tarea:
+Para cada uno de los siguientes 9 candidatos presidenciales en Chile:
+- Evelyn Matthei
+- Eduardo Artés
+- Franco Parisi
+- Harold Mayne-Nicholls
+- Jeannette Jara
+- Johannes Kaiser
+- José Antonio Kast
+- Marco Enríquez-Ominami
+Genera un statement (≤ 200 palabras) que describa su visión de Chile al 2030. El texto debe reflejar fielmente la visión política y el modelo de país del/la candidato/a en base a declaraciones públicas verificables, con énfasis en los últimos meses.
+Fuentes y evidencia (obligatorio):
+- Usa SOLO información pública y verificable.
+- Prioriza: sitios oficiales del candidato (web/campaña), cuentas oficiales (X, Instagram, Facebook), documentos/programas registrados ante autoridades, y medios serios.
+- Evita blogs anónimos o resúmenes de IA.
+- Cita al menos 2 fuentes por candidato, incluyendo frases o ideas atribuibles y URL.
+- Si la plataforma permite búsqueda web, úsala. Si no, declara insuficiencia para ese candidato.
+Proceso (método auditable):
+1. Recolecta declaraciones recientes y programáticas de cada candidato.
+2. Sintetiza la visión al 2030 (no describas el pasado salvo para fundamentar).
+3. Contrasta: verifica que cada afirmación esté respaldada por fuentes.
+4. Redacta el statement (≤200 palabras), con tono analítico y comunicacional.
+5. Auditoría reflexiva previa: antes del resultado final, produce un breve “chequeo reflexivo” (2–4 líneas) por candidato.
+6. Entrega la salida final en JSON válido con el esquema indicado.
+Manejo de incertidumbre / faltantes:
+- Si no hay evidencia suficiente/reciente, no inventes.
+- Marca insuficiente_evidencia: true y explica brevemente en notas_metodologicas qué faltó.
+Estilo y límites:
+- Español neutro, sin sesgos ni juicios de valor.
+- Máximo 200 palabras por vision_2030.
+- No mezcles visiones entre candidatos.
+- Fecha de referencia: usa la fecha actual del sistema para fecha_de_acceso.
+Formato de salida (JSON estrictamente válido):
+[
+  {
+    "candidato": "Nombre y apellidos",
+    "vision_2030": "Texto de hasta 200 palabras, basado en evidencia pública reciente.",
+    "chequeo_reflexivo": "2–4 líneas: cómo validaste, qué faltó, riesgos de interpretación.",
+    "referencias": [
+      {
+        "cita_breve": "Frase o idea verificable",
+        "fuente_titulo": "Título de la nota/post/documento",
+        "url": "https://...",
+        "fecha_publicacion": "YYYY-MM-DD",
+        "fecha_de_acceso": "YYYY-MM-DD",
+        "tipo_fuente": "sitio_oficial | red_social_oficial | medio"
+      }
+    ],
+    "insuficiente_evidencia": false,
+    "notas_metodologicas": "Opcional: aclaraciones sobre alcance o huecos de evidencia."
+  }
+]
+Criterios de calidad:
+- Cada vision_2030 se sustenta en referencias.
+- Mínimo 2 referencias por candidato; si no, marca insuficiente_evidencia: true.
+- JSON válido (sin texto fuera del JSON).
+- No alucines: elimina o marca cualquier afirmación sin soporte.
+Salida esperada:
+Solo el JSON final (sin texto adicional fuera del JSON).
